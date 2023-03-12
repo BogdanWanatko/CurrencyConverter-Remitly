@@ -76,6 +76,7 @@ public class CurrencyConverter {
             System.out.println("Invalid amount entered. Please enter a number.");
             return;
         }
+
         System.out.print("Enter the starting currency: ");
         String startCurrency = scanner.nextLine().toUpperCase();
         // Check if the starting currency is a valid 3-letter currency code
@@ -83,17 +84,22 @@ public class CurrencyConverter {
             System.out.println("Invalid starting currency entered. Please enter a valid 3-letter currency code.");
             return;
         }
+
         System.out.print("Enter the ending currency: ");
         String endCurrency = scanner.nextLine().toUpperCase();
-// Check if the ending currency is a valid 3-letter currency code
+        // Check if the ending currency is a valid 3-letter currency code
         if (endCurrency.length() != 3 || !endCurrency.matches("[A-Z]+")) {
             System.out.println("Invalid ending currency entered. Please enter a valid 3-letter currency code.");
             return;
         }
+
         scanner.close();
+
         try {
             double exchangedValue = CurrencyConverter.convert(amount, startCurrency, endCurrency);
-            System.out.println("Exchanged value: " + exchangedValue + " " + endCurrency);
+            // Round the exchanged value to 2 decimal places
+            exchangedValue = Math.round(exchangedValue * 100.0) / 100.0;
+            System.out.printf("Exchanged value: %.2f %s%n", exchangedValue, endCurrency);
         } catch (IOException | JSONException e) {
             String errorMessage = e.getMessage();
             if (errorMessage.contains("404")) {
